@@ -36,6 +36,9 @@ Using this command: ```$PMTK886```, the unit can be entering into High Altitude 
 
 ## Hardware Notes:
 
+### Green LED:
+The Green LED is directly connected to the PPS signal. It (typically) steady when on, but no fix, and blinking when a fix has been aquired. The PPS signal can be changed using the ```$PQ1PPS``` command. See the SDK manual in the datasheets folder.
+
 ### External Antenna:
 The board has a solder switch allowing to cut the signal to the onboard antenna, and solder a connection to the U.Fl/Ipex antenna connector. The board has footprints for matching antenna impedance components, (0 Ω resistor and unpopulated capacitors, all 0805 sized). *This part is experimental and no attempt of finding an antenna and specifying a impedeance matching sets of componnets has been done. However, an active antenna has been connected and without any matching circuits a cold boot acquision fix was obtained in < 20 min typical.*
 
