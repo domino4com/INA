@@ -11,7 +11,8 @@ This is a GNSS (GPS) Sensor providing navigational data.
 | Suggested Arduino Library | [GitHub](https://github.com/adafruit/Adafruit_GPS) |
 | Standard Altitude Limit | 10000 m |
 | Balloon Altitude Limit | 80000 m |
-| GNSS Systems: | GPS, GLONASS (or BeiDou), Galileo and SBAS |
+| GNSS Systems: | GPS, GLONASS, Galileo and QZSS |
+| Differential: | DGPS, SBAS (WAAS/EGNOS/MSAS/GAGAN) |
 | Firmware: | L76LNR02A02SC (2019/06/28) |
 | Protocols: | NMEA 0183 (v4.10), PMTK, PQ |
 | On Board Antenna: | 1575 Mhz, 4.3dBi gain |
