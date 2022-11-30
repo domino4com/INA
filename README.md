@@ -1,25 +1,43 @@
-<img src="assets/IWA.svg" width=200 align="right">
+<img src="assets/NA.svg" width=200 align="right">
 
-# IWA - Input Weather A
-This is a Weather Sensor measuring Atmospheric **Temperature** and Relative **Humidity**
+# INA - Input Navigation A
+This is a GNSS (GPS) Sensor providing navigational data.
 | Specifications | |
 | --: | :--: |
 | Communication | I²C |
-| I²C Address | 0x44 |
-| ChipSet | Sensirion SHT30-DIS|
-| Datasheet | [.pdf](https://.pdf) |
-| Suggested Arduino Library | [GitHub](https://github.com/) |
-| Temperature Accuracy | ±0.2 °C |
-| Temperature Range | -40 to 125 °C |
-| Humidity Accuracy | ± 2 %RH |
-| Humidity Range | 0 to 100 %RH |
+| I²C Address | 0x10 |
+| ChipSet | Quectel L76-L-M33|
+| Datasheet | [see datasheets folder](datasheets) |
+| Suggested Arduino Library | [GitHub](https://github.com/adafruit/Adafruit_GPS) |
+| Standard Altitude Limit Accuracy | ±0.2 °C |
+| Balloon Altitude Limit | -40 to 125 °C |
+| GNSS Systems: | GPS, GLONASS (or BeiDou), Galileo and SBAS |
+| Firmware: | L76LNR02A02SC (2019/06/28) |
+| Protocols: | NMEA 0183, PMTK, PQ |
+| On Board Antenna: | 1575 Mhz, 4.3dBi gain |
+| Cold boot fix acqusition | <2 min typ |
+| **Max Dynamic Performance** ||
+| Altitude: | Max. 18000 m |
+| Velocity: | Max. 515 m/s |
+| Acceleration: | Max. <span>&#177;</span>4g |
 
 ## Supported I²C Modes
-- [ ] 100 kbit/s Standard Mode (SM) 
-- [ ] 400 kbit/s	Fast Mode	FM
+- [X] 100 kbit/s Standard Mode (SM) 
+- [X] 400 kbit/s	Fast Mode	FM
 - [ ] 1 Mbit/s	Fast Mode Plus	FM+
 - [ ] 3.4Mbit/s	High Speed Mode	HS
 - [ ] 5 Mbit/s	Ultra Fast Mode	UFM
+
+## Notes:
+
+### External Antenna:
+The board has a solder switch allowing to cut the signal to the onboard antenna, and solder a connection to the U.Fl/Ipex antenna connector. The board has null <TODO> components, (0 Ω resistor and unpopulated capacitors, all 0805 sized) for own <TODO>.
+
+### Battery:
+The circuit has components for a non-rechargeble coincell battery of type <TODO>, which can optionally soldered on, in order to reduce cold boot acquisition time.
+
+### RX/TX Solder pads
+As default the Serial (UART) connection to the GPS is not connected. The user is expected to use I²C, similar to other sensors. However the RX/TX solder pads can be soldered close to establish a Serial connection to a core. If this is done, this INA xChip has to be removed from a circuit everytime a core is programmed, since the core is programmed over the serial connection.
 
 # License: 
 <img src="assets/CC-BY-NC-SA.svg" width=200 align="right">
