@@ -36,10 +36,10 @@ Using this command: ```$PMTK886```, the unit can be entering into High Altitude 
 ## Hardware Notes:
 
 ### External Antenna:
-The board has a solder switch allowing to cut the signal to the onboard antenna, and solder a connection to the U.Fl/Ipex antenna connector. The board has null <TODO> components, (0 Ω resistor and unpopulated capacitors, all 0805 sized) for own <TODO>.
+The board has a solder switch allowing to cut the signal to the onboard antenna, and solder a connection to the U.Fl/Ipex antenna connector. The board has footprints for matching antenna impedance components, (0 Ω resistor and unpopulated capacitors, all 0805 sized). *This part is experimental and no attempt of finding an antenna and specifying a impedeance matching sets of componnets has been done. However, an active antenna has been connected and without any matching circuits a cold boot acquision fix was obtained in < 20 min typical.*
 
 ### Battery:
-The circuit has components for a non-rechargeble coincell battery of type <TODO>, which can optionally soldered on, in order to reduce cold boot acquisition time.
+The circuit has a footprint for a non-rechargeble coincell battery holder of type *CR1220*, which can optionally be soldered on, in order to reduce cold boot acquisition time.
 
 ### RX/TX Solder pads
 As default the Serial (UART) connection to the GPS is not connected. The user is expected to use I²C, similar to other sensors. However the RX/TX solder pads can be soldered close to establish a Serial connection to a core. If this is done, this INA xChip has to be removed from a circuit everytime a core is programmed, since the core is programmed over the serial connection.
