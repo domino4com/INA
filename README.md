@@ -1,4 +1,4 @@
-<img src="assets/NA.svg" width=200 align="right">
+<img src="assets/INA.svg" width=200 align="right">
 
 # INA - Input Navigation A
 This is a GNSS (GPS) Sensor providing navigational data.
