@@ -9,6 +9,7 @@ This is a GNSS (GPS) Sensor providing navigational data.
 | ChipSet | Quectel L76-L-M33|
 | Datasheet | [see datasheets folder](datasheets) |
 | Suggested Arduino Library | [GitHub](https://github.com/adafruit/Adafruit_GPS) |
+| Suggested MicroPython Library | [GitHub](https://github.com/inmcm/micropyGPS) |
 | Standard Altitude Limit | 10000 m |
 | Balloon Altitude Limit | 80000 m |
 | GNSS Systems: | GPS, GLONASS, Galileo and QZSS |
