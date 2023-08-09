@@ -36,7 +36,6 @@ void setup() {
 
 void loop() {
     if (input.getData(&ts[0], lat, lon, alt, sog, cog, sat, fx,hdop)) {
-        Serial.printf("Seconds: %d : ", millis()/1000);
         Serial.printf(s, ts, lat, lon,hdop,sat,alt,fx ? "Got fix" : "No fix");
     } else {
         Serial.println("Failed to get INA data.");
