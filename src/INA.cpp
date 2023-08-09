@@ -29,12 +29,12 @@ bool INA::begin() {
     return rc;
 }
 
-bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx,nmea_float_t &hdopp) {
-    char c;
-    do {
+bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx, nmea_float_t &hdopp) {
+    char c = read();
+    while (!newNMEAreceived()) {
         c = read();
         // if (c) Serial.print(c);
-    } while (!newNMEAreceived());
+    }
 
     if (!parse(lastNMEA())) return false;
 
@@ -59,7 +59,7 @@ bool INA::getJSON(JsonObject &doc) {
     nmea_float_t lat, lon, alt, sog, cog, hdopp;
     bool fx;
     char ts[25];
-    if (!getData(&ts[0], lat, lon, alt, sog, cog, sat, fx,hdopp)) {
+    if (!getData(&ts[0], lat, lon, alt, sog, cog, sat, fx, hdopp)) {
         return false;
     }
 
