@@ -1,5 +1,8 @@
 <img src="assets/INA.svg" width=200 align="right">
 
+[![PlatformIO](https://github.com/domino4com/INA/actions/workflows/platformio.yml/badge.svg)](https://github.com/domino4com/INA/actions/workflows/platformio.yml)
+[![Arduino](https://github.com/domino4com/INA/actions/workflows/arduino.yml/badge.svg)](https://github.com/domino4com/INA/actions/workflows/arduino.yml)
+
 # INA - Input Navigation A
 This is a GNSS (GPS) Sensor providing navigational data.
 | Specifications | |

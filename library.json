@@ -1,0 +1,34 @@
+{
+    "name": "INA",
+    "version": "1.0.0",
+    "description": "INA: Input ? ? - ???",
+    "keywords": "INA ? ?",
+    "authors": [{
+        "name": "Bjarke Gotfredsen",
+        "url": "https://github.com/gotfredsen",
+        "maintainer": true
+    }],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/domino4com/INA.git"
+    },
+    "homepage": "https://github.com/domino4com/INA",
+    "export": {
+        "include": [
+            "LICENSE",
+            "library.json",
+            "library.properties",
+            "README.md",
+            "keywords.txt",
+            "src/*",
+            "examples/*"
+        ]
+    },
+    "frameworks": ["arduino", "espidf"],
+    "platforms": "esp32",
+    "headers": "INA.h",
+    "dependencies":
+    {
+        "bblanchon/ArduinoJson": "^6.21.3"
+    }
+}
