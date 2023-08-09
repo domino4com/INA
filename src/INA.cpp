@@ -30,9 +30,10 @@ bool INA::begin() {
 }
 
 bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx,nmea_float_t &hdopp) {
-    char c = 0;
+    // char c = 0;
     do {
-        c = read();
+        read();
+        // c = read();
         // if (c) Serial.print(c);
     } while (!newNMEAreceived());
 
