@@ -71,42 +71,42 @@ bool INA::getJSON(JsonObject &doc) {
     dataSet["value"] = String(ts);
     dataSet["unit"] = "ISO 8601";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();   // Subsequent data sets
     dataSet["name"] = "Lat";
     dataSet["value"] = lat;
     dataSet["unit"] = "DD";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();   // Subsequent data sets
     dataSet["name"] = "Lon";
     dataSet["value"] = lon;
     dataSet["unit"] = "DD";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();  // Subsequent data sets
     dataSet["name"] = "Alt";
     dataSet["value"] = alt;
     dataSet["unit"] = "m";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();   // Subsequent data sets
     dataSet["name"] = "SoG";
     dataSet["value"] = sog * 0.514444;
     dataSet["unit"] = "m/s";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();   // Subsequent data sets
     dataSet["name"] = "CoG";
     dataSet["value"] = sog;
     dataSet["unit"] = "º";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();   // Subsequent data sets
     dataSet["name"] = "Sat";
     dataSet["value"] = sat;
     dataSet["unit"] = "";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();  // Subsequent data sets
     dataSet["name"] = "Fix";
     dataSet["value"] = fx;
     dataSet["unit"] = "";
 
-    dataArray.add(dataSet);  // Subsequent data sets
+    dataSet = dataArray.createNestedObject();   // Subsequent data sets
     dataSet["name"] = "HDOP";
     dataSet["value"] = hdopp;
     dataSet["unit"] = "";
