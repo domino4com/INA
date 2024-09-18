@@ -27,8 +27,7 @@ void setup() {
 }
 
 void loop() {
-    StaticJsonDocument<1024> doc;
-    JsonObject root = doc.to<JsonObject>();
+      JsonDocument root;
 
     if (input.getJSON(root)) {
         serializeJsonPretty(root, Serial);

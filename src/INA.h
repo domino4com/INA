@@ -58,7 +58,7 @@ class INA {
     INA();
     bool begin();
     bool getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx, nmea_float_t &hdop);
-    bool getJSON(JsonObject &doc);
+    bool getJSON(JsonDocument &doc);
 
     void common_init(void);
     virtual ~INA();

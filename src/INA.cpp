@@ -29,7 +29,7 @@ bool INA::begin() {
     return rc;
 }
 
-bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx,nmea_float_t &hdopp) {
+bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx, nmea_float_t &hdopp) {
     // char c = 0;
     do {
         read();
@@ -55,58 +55,90 @@ bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &
     return true;  // Return true for successful read (add error handling if needed)
 }
 
-bool INA::getJSON(JsonObject &doc) {
+bool INA::getJSON(JsonDocument &doc) {
     uint8_t sat;
     nmea_float_t lat, lon, alt, sog, cog, hdopp;
     bool fx;
     char ts[25];
-    if (!getData(&ts[0], lat, lon, alt, sog, cog, sat, fx,hdopp)) {
+    if (!getData(&ts[0], lat, lon, alt, sog, cog, sat, fx, hdopp)) {
         return false;
     }
 
-    JsonArray dataArray = doc.createNestedArray("INA");
+    JsonArray dataArray = doc["INA"].to<JsonArray>();
 
-    JsonObject dataSet = dataArray.createNestedObject();  // First data set
+    JsonObject dataSet = dataArray.add<JsonObject>();  // First data set
     dataSet["name"] = "Timestamp";
     dataSet["value"] = String(ts);
     dataSet["unit"] = "ISO 8601";
 
-    dataSet = dataArray.createNestedObject();   // Subsequent data sets
+    // TODO:
+    //  {
+    //    "point": {
+    //      "lat": 40.71,
+    //      "lon": 74.00
+    //    }
+    //  }
+    //  or
+    //  {
+    //    "point": "40.71,74.00"
+    //  }
+    //  or
+    //  {
+    //    "point": [74.00, 40.71]
+    //  }
+    //  or
+    //  {
+    //    "point": {
+    //      "type": "Point",
+    //      "coordinates": [74.00, 40.71]
+    //    }
+    //  }
+    //  or
+    //          "location": "39.09972,-94.57853",
+    //          "geoJSON": {
+    //              "type": "Point",
+    //              "coordinates": [
+    //                  -94.57853,
+    //                  39.09972
+    //              ]
+    //          },
+
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Lat";
     dataSet["value"] = lat;
     dataSet["unit"] = "DD";
 
-    dataSet = dataArray.createNestedObject();   // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Lon";
     dataSet["value"] = lon;
     dataSet["unit"] = "DD";
 
-    dataSet = dataArray.createNestedObject();  // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Alt";
     dataSet["value"] = alt;
     dataSet["unit"] = "m";
 
-    dataSet = dataArray.createNestedObject();   // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "SoG";
     dataSet["value"] = sog * 0.514444;
     dataSet["unit"] = "m/s";
 
-    dataSet = dataArray.createNestedObject();   // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "CoG";
     dataSet["value"] = sog;
     dataSet["unit"] = "º";
 
-    dataSet = dataArray.createNestedObject();   // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Sat";
     dataSet["value"] = sat;
     dataSet["unit"] = "";
 
-    dataSet = dataArray.createNestedObject();  // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Fix";
     dataSet["value"] = fx;
     dataSet["unit"] = "";
 
-    dataSet = dataArray.createNestedObject();   // Subsequent data sets
+    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "HDOP";
     dataSet["value"] = hdopp;
     dataSet["unit"] = "";
@@ -330,7 +362,8 @@ char INA::read(void) {
     }
     // Serial.print(c);
 
-    currentline[lineidx++] = c;
+    currentline[lineidx] = c;
+    lineidx = lineidx + 1;
     if (lineidx >= MAXLINELENGTH)
         lineidx = MAXLINELENGTH -
                   1;  // ensure there is someplace to put the next received character
@@ -371,7 +404,10 @@ char INA::read(void) {
 void INA::sendCommand(const char *str) {
     Serial.println(str);
     Wire.beginTransmission(0x10);
-    Wire.write(str);
+    for (int i = 0; str[i] != 0; i++) {
+        Wire.write(str[i]);
+    }
+    // Wire.write(str);
     Wire.write(0x0D);
     Wire.write(0x0A);
     Wire.endTransmission();
