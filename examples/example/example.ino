@@ -14,7 +14,7 @@ char ts[25];
 uint8_t  sat;
 nmea_float_t lat, lon, alt, sog, cog, hdop;
 bool fx;
-char s[] = "%s: Lat: %.5f, Lon: %.5f, HDOP: %.2f, sat: %u, alt: %.2f, %s\n";
+char s[] = "%s: Lat: %.6f, Lon: %.6f, HDOP: %.2f, sat: %u, alt: %.2f, %s\n";
 
 void setup() {
     Serial.begin(115200);

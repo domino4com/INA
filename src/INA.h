@@ -57,7 +57,7 @@ class INA {
    public:
     INA();
     bool begin();
-    bool getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx, nmea_float_t &hdop);
+    bool getData(char *ts, float &lat, float &lon, float &alt, float &sog, float &cog, unsigned int &sat, bool &fx, float &hdop);
     bool getJSON(JsonDocument &doc);
 
     void common_init(void);

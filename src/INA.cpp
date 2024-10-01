@@ -8,6 +8,7 @@
  * @date  2023
  * @https://github.com/domino4com/INA
  */
+#define NMEA_FLOAT_T float
 #include "INA.h"
 
 #include "Wire.h"
@@ -29,7 +30,7 @@ bool INA::begin() {
     return rc;
 }
 
-bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &alt, nmea_float_t &sog, nmea_float_t &cog, uint8_t &sat, bool &fx, nmea_float_t &hdopp) {
+bool INA::getData(char *ts, float &lat, float &lon, float &alt, float &sog, float &cog, unsigned int &sat, bool &fx, float &hdopp) {
     // char c = 0;
     do {
         read();
@@ -56,8 +57,8 @@ bool INA::getData(char *ts, nmea_float_t &lat, nmea_float_t &lon, nmea_float_t &
 }
 
 bool INA::getJSON(JsonDocument &doc) {
-    uint8_t sat;
-    nmea_float_t lat, lon, alt, sog, cog, hdopp;
+    unsigned int sat;
+    float lat, lon, alt, sog, cog, hdopp;
     bool fx;
     char ts[25];
     if (!getData(&ts[0], lat, lon, alt, sog, cog, sat, fx, hdopp)) {
@@ -71,31 +72,33 @@ bool INA::getJSON(JsonDocument &doc) {
     dataSet["value"] = String(ts);
     dataSet["unit"] = "ISO 8601";
 
-    // Comply with Kibana
-    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "location";
-    dataSet["value"] = "POINT ("+String(lon,6)+","+String(lat,6)+")";
-    dataSet["unit"] = "";
+    if (fix) {
+        // Comply with Kibana
+        dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
+        dataSet["name"] = "location";
+        dataSet["value"] = "POINT (" + String(lon, 6) + "," + String(lat, 6) + ")";
+        dataSet["unit"] = "";
 
-    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "Alt";
-    dataSet["value"] = alt;
-    dataSet["unit"] = "m";
+        dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
+        dataSet["name"] = "Alt";
+        dataSet["value"] = alt;
+        dataSet["unit"] = "m";
 
-    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "SoG";
-    dataSet["value"] = sog * 0.514444;
-    dataSet["unit"] = "m/s";
+        dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
+        dataSet["name"] = "SoG";
+        dataSet["value"] = sog * 0.514444;
+        dataSet["unit"] = "m/s";
 
-    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "CoG";
-    dataSet["value"] = sog;
-    dataSet["unit"] = "º";
+        dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
+        dataSet["name"] = "CoG";
+        dataSet["value"] = cog;
+        dataSet["unit"] = "º";
 
-    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "Sat";
-    dataSet["value"] = sat;
-    dataSet["unit"] = "";
+        dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
+        dataSet["name"] = "Sat";
+        dataSet["value"] = sat;
+        dataSet["unit"] = "";
+    }
 
     dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Fix";
@@ -106,7 +109,6 @@ bool INA::getJSON(JsonDocument &doc) {
     dataSet["name"] = "HDOP";
     dataSet["value"] = hdopp;
     dataSet["unit"] = "";
-
     return true;
 }
 
