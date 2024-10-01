@@ -71,47 +71,15 @@ bool INA::getJSON(JsonDocument &doc) {
     dataSet["value"] = String(ts);
     dataSet["unit"] = "ISO 8601";
 
-    // TODO:
-    //  {
-    //    "point": {
-    //      "lat": 40.71,
-    //      "lon": 74.00
-    //    }
-    //  }
-    //  or
-    //  {
-    //    "point": "40.71,74.00"
-    //  }
-    //  or
-    //  {
-    //    "point": [74.00, 40.71]
-    //  }
-    //  or
-    //  {
-    //    "point": {
-    //      "type": "Point",
-    //      "coordinates": [74.00, 40.71]
-    //    }
-    //  }
-    //  or
-    //          "location": "39.09972,-94.57853",
-    //          "geoJSON": {
-    //              "type": "Point",
-    //              "coordinates": [
-    //                  -94.57853,
-    //                  39.09972
-    //              ]
-    //          },
-
+    // Comply with Kibana
     dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "Lat";
-    dataSet["value"] = lat;
+    dataSet["name"] = "location";
+    dataSet["value"] = String(lat)+","+String(lon);
     dataSet["unit"] = "DD";
-
-    dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    dataSet["name"] = "Lon";
-    dataSet["value"] = lon;
-    dataSet["unit"] = "DD";
+    // dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
+    // dataSet["name"] = "Lon";
+    // dataSet["value"] = lon;
+    // dataSet["unit"] = "DD";
 
     dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Alt";
