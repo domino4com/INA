@@ -74,12 +74,8 @@ bool INA::getJSON(JsonDocument &doc) {
     // Comply with Kibana
     dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "location";
-    dataSet["value"] = String(lat)+","+String(lon);
-    dataSet["unit"] = "DD";
-    // dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
-    // dataSet["name"] = "Lon";
-    // dataSet["value"] = lon;
-    // dataSet["unit"] = "DD";
+    dataSet["value"] = "POINT ("+String(lon,6)+","+String(lat,6)+")";
+    dataSet["unit"] = "";
 
     dataSet = dataArray.add<JsonObject>();  // Subsequent data sets
     dataSet["name"] = "Alt";
